@@ -6,7 +6,7 @@ function ScheduleItem(props) {
 
   const router = useRouter()
   const handleSchedule = () => {
-    router.push(`/my-schedules/${title}_${scheduleId}`)
+    router.push(`/admin/mySchedules/${title}_${scheduleId}`)
   }
 
   return (

@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
 import Link from 'next/link'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 import LogoutIcon from '@/svg/LogoutIcon'
+import useAPIAuth from '../../api.config/useAPIAuth'
 
 function Navbar(props) {
-  const { pathname } = useRouter() // Get the pathname from useRouter hook
+  const { pathname } = useRouter()
+  const { logoutUser } = useAPIAuth()
+  const router = useRouter()
 
-  // Define your left navbar list items
   var navbarListItems = [
-    { id: 1, link: 'My Schedules', path: '/admin/mySchedules' }, // Add path property for each item
+    { id: 1, link: 'My Schedules', path: '/admin/mySchedules' },
     { id: 2, link: 'Tasks', path: '/admin/tasks' },
     { id: 3, link: 'Venues', path: '/admin/venues' },
     { id: 4, link: 'Human R.', path: '/admin/humanResource' },
@@ -20,6 +21,13 @@ function Navbar(props) {
 
   const handleLinkState = (index) => {
     setActiveIndex(index)
+  }
+
+  const handleLogout = () => {
+    logoutUser().then(() => {
+      localStorage.removeItem('team')
+      router.push('/admin')
+    })
   }
 
   return (
@@ -46,9 +54,12 @@ function Navbar(props) {
             )
           })}
         </ul>
-        <div className="m-auto mr-12 cursor-pointer hover:text-primary hover:scale-110 transition-all">
+        <button
+          onClick={handleLogout}
+          className="m-auto mr-12 cursor-pointer hover:text-primary hover:scale-110 transition-all"
+        >
           <LogoutIcon />
-        </div>
+        </button>
       </div>
     </>
   )

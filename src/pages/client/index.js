@@ -9,3 +9,7 @@ const Client = () => {
 }
 
 export default Client
+
+Client.getLayout = function PageLayout(page) {
+  return <>{page} </>
+}
